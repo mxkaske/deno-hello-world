@@ -1,40 +1,20 @@
-import { serve } from "https://deno.land/std@0.140.0/http/server.ts";
+import {
+  Command,
+  EnumType,
+} from "https://deno.land/x/cliffy@v0.25.4/command/mod.ts";
 
-async function handleRequest(request: Request): Promise<Response> {
-  const { pathname } = new URL(request.url);
+const logLevelType = new EnumType(["debug", "info", "warn", "error"]);
 
-  // This is how the server works:
-  // 1. A request comes in for a specific asset.
-  // 2. We read the asset from the file system.
-  // 3. We send the asset back to the client.
-
-  // Check if the request is for style.css.
-  if (pathname.startsWith("/style.css")) {
-    // Read the style.css file from the file system.
-    const file = await Deno.readFile("./style.css");
-    // Respond to the request with the style.css file.
-    return new Response(file, {
-      headers: {
-        "content-type": "text/css",
-      },
-    });
-  }
-
-  return new Response(
-    `<html>
-      <head>
-        <link rel="stylesheet" href="style.css" />
-      </head>
-      <body>
-        <h1>Example</h1>
-      </body>
-    </html>`,
-    {
-      headers: {
-        "content-type": "text/html; charset=utf-8",
-      },
-    }
-  );
-}
-
-serve(handleRequest);
+await new Command()
+  .name("cliffy")
+  .version("0.1.0")
+  .description("Command line framework for Deno")
+  .type("log-level", logLevelType)
+  .env("DEBUG=<enable:boolean>", "Enable debug output.")
+  .option("-d, --debug", "Enable debug output.")
+  .option("-l, --log-level <level:log-level>", "Set log level.", {
+    default: "info" as const,
+  })
+  .arguments("<input:string> [output:string]")
+  .action((options, ...args) => {})
+  .parse(Deno.args);
