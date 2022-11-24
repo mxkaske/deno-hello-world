@@ -1,20 +1,16 @@
-import {
-  Command,
-  EnumType,
-} from "https://deno.land/x/cliffy@v0.25.4/command/mod.ts";
-
-const logLevelType = new EnumType(["debug", "info", "warn", "error"]);
+import { Command } from "https://deno.land/x/cliffy@v0.25.4/command/mod.ts";
+import { copySync } from "https://deno.land/std@0.165.0/fs/mod.ts";
 
 await new Command()
-  .name("cliffy")
-  .version("0.1.0")
-  .description("Command line framework for Deno")
-  .type("log-level", logLevelType)
-  .env("DEBUG=<enable:boolean>", "Enable debug output.")
-  .option("-d, --debug", "Enable debug output.")
-  .option("-l, --log-level <level:log-level>", "Set log level.", {
-    default: "info" as const,
+  // Main command.
+  .name("create-doxi-app")
+  .version("0.0.1")
+  .description("Command line test")
+  .option("-d, --dir", "Name of the directory")
+  .arguments("<directory>")
+  .action((options, ...args) => {
+    copySync("./content", args[0]);
+    // Deno.mkdir(args[0]);
+    console.log(`Next steps:\ncd ${args[0]}\nnpm i\nnpm run dev`);
   })
-  .arguments("<input:string> [output:string]")
-  .action((options, ...args) => {})
   .parse(Deno.args);
