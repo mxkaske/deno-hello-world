@@ -1,6 +1,8 @@
 import { Command } from "https://deno.land/x/cliffy@v0.25.4/command/mod.ts";
 import { copySync } from "https://deno.land/std@0.165.0/fs/mod.ts";
 
+const cwd = Deno.cwd();
+
 await new Command()
   // Main command.
   .name("create-doxi-app")
@@ -9,7 +11,7 @@ await new Command()
   .option("-d, --dir", "Name of the directory")
   .arguments("<directory>")
   .action((options, ...args) => {
-    copySync("./content", args[0]);
+    copySync(`${cwd}/content`, args[0]);
     // Deno.mkdir(args[0]);
     console.log(`Next steps:\ncd ${args[0]}\nnpm i\nnpm run dev`);
   })
