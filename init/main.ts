@@ -20,8 +20,10 @@ export async function initProject(folder: string, name: string) {
   for (const resource of resources) {
     const fp_read = path.join(root, resource.read);
     const fp_write = path.join(root, resource.write);
+    console.log(root, fp_read, fp_write);
     await fs.ensureFile(fp_read);
     const bytes = await Deno.readFile(fp_read);
+    console.log(fp_read, bytes);
     await Deno.writeFile(fp_write, bytes);
   }
   console.log("done.");
