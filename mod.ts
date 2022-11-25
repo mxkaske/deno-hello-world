@@ -4,8 +4,6 @@ import * as path from "https://deno.land/std@0.165.0/path/mod.ts";
 
 const filePath = path.fromFileUrl(new URL("content", import.meta.url));
 
-console.log(new URL("content", import.meta.url));
-
 await new Command()
   // Main command.
   .name("create-doxi-app")
@@ -14,6 +12,7 @@ await new Command()
   .option("-d, --dir", "Name of the directory")
   .arguments("<directory>")
   .action((options, ...args) => {
+    console.log(new URL("content", import.meta.url));
     copySync(filePath, args[0]);
     // Deno.mkdir(args[0]);
     console.log(`Next steps:\ncd ${args[0]}\nnpm i\nnpm run dev`);
