@@ -4,6 +4,8 @@ import * as path from "https://deno.land/std@0.165.0/path/mod.ts";
 
 const filePath = path.fromFileUrl(new URL("content", import.meta.url));
 
+console.log(new URL("content", import.meta.url));
+
 await new Command()
   // Main command.
   .name("create-doxi-app")
