@@ -1,8 +1,6 @@
 import { Command } from "https://deno.land/x/cliffy@v0.25.4/command/mod.ts";
 import { copySync } from "https://deno.land/std@0.165.0/fs/mod.ts";
-import * as path from "https://deno.land/std@0.165.0/path/mod.ts";
-
-const filePath = path.fromFileUrl(new URL("content", import.meta.url));
+// import * as path from "https://deno.land/std@0.165.0/path/mod.ts";
 
 await new Command()
   // Main command.
@@ -13,7 +11,7 @@ await new Command()
   .arguments("<directory>")
   .action((options, ...args) => {
     console.log(new URL("content", import.meta.url));
-    copySync(filePath, args[0]);
+    copySync(new URL("content", import.meta.url), args[0]);
     // Deno.mkdir(args[0]);
     console.log(`Next steps:\ncd ${args[0]}\nnpm i\nnpm run dev`);
   })
