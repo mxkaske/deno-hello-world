@@ -1,9 +1,9 @@
 import * as path from "https://deno.land/std@0.165.0/path/mod.ts";
 import * as fs from "https://deno.land/std@0.165.0/fs/mod.ts";
 
-const initPath = path.dirname(path.fromFileUrl(import.meta.url));
+// const initPath = path.dirname(path.fromFileUrl(import.meta.url));
 
-console.log({ initPath });
+// console.log({ initPath });
 
 const resources = [
   {
