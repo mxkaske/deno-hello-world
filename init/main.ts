@@ -3,12 +3,14 @@ import * as fs from "https://deno.land/std@0.165.0/fs/mod.ts";
 
 const initPath = path.dirname(path.fromFileUrl(import.meta.url));
 
+console.log({ initPath });
+
 const resources = [
   {
-    read: "../content/test.json",
+    read: "./content/test.json",
     write: "/test.json",
   },
-  { read: "../content/test.ts", write: "/test.ts" },
+  { read: "./content/test.ts", write: "/test.ts" },
 ];
 
 export async function initProject(folder: string, name: string) {
@@ -20,7 +22,7 @@ export async function initProject(folder: string, name: string) {
   console.log("generating...");
   await fs.ensureDir(root);
   for (const resource of resources) {
-    const fp_read = path.join(initPath, resource.read);
+    const fp_read = resource.read;
     const fp_write = path.join(root, resource.write);
     console.log(root, fp_read, fp_write);
     await fs.ensureFile(fp_read);
